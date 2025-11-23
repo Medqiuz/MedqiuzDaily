@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmaceutical Abbreviations Memorization Guide | MedQuiz</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1a73e8, #6c8ef5);
+            color: white;
+            padding: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .logo-icon {
+            font-size: 36px;
+            margin-right: 15px;
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        .content-section {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #1a73e8;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        h3 {
+            color: #333;
+            margin: 25px 0 15px;
+            padding-left: 10px;
+            border-left: 4px solid #1a73e8;
+        }
+        
+        .abbreviation-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .abbreviation-table th {
+            background-color: #1a73e8;
+            color: white;
+            padding: 12px 15px;
+            text-align: left;
+        }
+        
+        .abbreviation-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .abbreviation-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .abbreviation-table tr:hover {
+            background-color: #e3f2fd;
+        }
+        
+        .tip-box {
+            background-color: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .warning-box {
+            background-color: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .mnemonic {
+            background-color: #e3f2fd;
+            border-left: 4px solid #1a73e8;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .mnemonic strong {
+            color: #1a73e8;
+        }
+        
+        .category-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .category-btn {
+            padding: 10px 15px;
+            background-color: #e9ecef;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .category-btn:hover {
+            background-color: #dee2e6;
+        }
+        
+        .category-btn.active {
+            background-color: #1a73e8;
+            color: white;
+        }
+        
+        .category-section {
+            display: none;
+        }
+        
+        .category-section.active {
+            display: block;
+        }
+        
+        .quick-tips {
+            background-color: #fff3e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .quick-tips h3 {
+            color: #e65100;
+            border-left-color: #e65100;
+        }
+        
+        .quick-tips ul {
+            margin-left: 20px;
+        }
+        
+        .quick-tips li {
+            margin-bottom: 10px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #6c757d;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .content-section {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .abbreviation-table {
+                font-size: 14px;
+            }
+            
+            .abbreviation-table th, 
+            .abbreviation-table td {
+                padding: 8px 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">⚕️</div>
+                <div>
+                    <h1>MedQuiz</h1>
+                    <div class="subtitle">Pharmaceutical Abbreviations Memorization Guide</div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="content-section">
+            <h2>Mastering Pharmaceutical Abbreviations</h2>
+            <p>This guide provides effective memorization techniques for pharmaceutical abbreviations commonly used in prescriptions and medical documentation. Use these tips to enhance your recall and avoid medication errors.</p>
+            
+            <div class="quick-tips">
+                <h3>Quick Memorization Strategies</h3>
+                <ul>
+                    <li><strong>Create associations:</strong> Link abbreviations to familiar words or concepts</li>
+                    <li><strong>Use mnemonics:</strong> Develop memorable phrases or sentences</li>
+                    <li><strong>Group by category:</strong> Study related abbreviations together</li>
+                    <li><strong>Practice with flashcards:</strong> Regular repetition strengthens memory</li>
+                    <li><strong>Apply in context:</strong> Use abbreviations in practice scenarios</li>
+                </ul>
+            </div>
+            
+            <div class="category-nav">
+                <button class="category-btn active" data-category="dose-frequency">Dose Frequency</button>
+                <button class="category-btn" data-category="routes">Routes of Administration</button>
+                <button class="category-btn" data-category="dosage-forms">Dosage Forms</button>
+                <button class="category-btn" data-category="timing">Timing & Instructions</button>
+                <button class="category-btn" data-category="eyes-ears">Eyes & Ears</button>
+                <button class="category-btn" data-category="latin-terms">Latin Terms</button>
+            </div>
+            
+            <!-- Dose Frequency Abbreviations -->
+            <div class="category-section active" id="dose-frequency">
+                <h2>Dose Frequency Abbreviations</h2>
+                
+                <table class="abbreviation-table">
+                    <thead>
+                        <tr>
+                            <th>Abbreviation</th>
+                            <th>Meaning</th>
+                            <th>Memorization Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>QD</td>
+                            <td>Once daily</td>
+                            <td>
+                                <div class="mnemonic"><strong>Q</strong>uiet <strong>D</strong>ay - just once</div>
+                                <div class="tip-box">Think of "Q" as "every" and "D" as "day"</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>BID</td>
+                            <td>Twice daily</td>
+                            <td>
+                                <div class="mnemonic"><strong>B</strong>reakfast and <strong>D</strong>inner - two main meals</div>
+                                <div class="tip-box">BID = Bis In Die (Latin for "twice a day")</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>TID</td>
+                            <td>Three times daily</td>
+                            <td>
+                                <div class="mnemonic"><strong>T</strong>hree <strong>I</strong>mportant <strong>D</strong>oses</div>
+                                <div class="tip-box">TID = Ter In Die (Latin for "three times a day")</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>QID</td>
+                            <td>Four times daily</td>
+                            <td>
+                                <div class="mnemonic"><strong>Q</strong>uarterly <strong>I</strong>n <strong>D</strong>ay - four parts</div>
+                                <div class="tip-box">QID = Quater In Die (Latin for "four times a day")</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>QHS</td>
+                            <td>At bedtime</td>
+                            <td>
+                                <div class="mnemonic"><strong>Q</strong>uiet <strong>H</strong>our of <strong>S</strong>leep</div>
+                                <div class="tip-box">QHS = Quaque Hora Somni (every hour of sleep)</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Q4H</td>
+                            <td>Every 4 hours</td>
+                            <td>
+                                <div class="mnemonic"><strong>Q</strong>uarterly (4 times) <strong>H</strong>ourly</div>
+                                <div class="tip-box">The number indicates the frequency in hours</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Q6H</td>
+                            <td>Every 6 hours</td>
+                            <td>
+                                <div class="mnemonic"><strong>Q</strong>uarter <strong>H</strong>alf-day (6 hours is ¼ of a day)</div>
+                                <div class="tip-box">Use the number to calculate daily frequency (24 ÷ number)</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>PRN</td>
+                            <td>As needed</td>
+                            <td>
+                                <div class="mnemonic"><strong>P</strong>atient <strong>R</strong>equests <strong>N</strong>ow</div>
+                                <div class="tip-box">PRN = Pro Re Nata (Latin for "as the circumstance arises")</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="warning-box">
+                    <strong>Warning:</strong> Be careful with QD (once daily) as it can be misinterpreted. Some institutions prefer writing "once daily" to avoid confusion with QID (four times daily).
+                </div>
+            </div>
+            
+            <!-- Routes of Administration -->
+            <div class="category-section" id="routes">
+                <h2>Routes of Administration</h2>
+                
+                <table class="abbreviation-table">
+                    <thead>
+                        <tr>
+                            <th>Abbreviation</th>
+                            <th>Meaning</th>
+                            <th>Memorization Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>PO</td>
+                            <td>By mouth</td>
+                            <td>
+                                <div class="mnemonic"><strong>P</strong>er <strong>O</strong>s (Latin for "by mouth")</div>
+                                <div class="tip-box">Think of "PO" as "Put Oral" or "Per Oral"</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>SL</td>
+                            <td>Sublingual</td>
+                            <td>
+                                <div class="mnemonic"><strong>S</strong>ub <strong>L</strong>ingual - under the tongue</div>
+                                <div class="tip-box">"Lingual" relates to tongue (like linguistics)</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>IM</td>
+                            <td>Intramuscular</td>
+                            <td>
+                                <div class="mnemonic"><strong>I</strong>nside <strong>M</strong>uscle</div>
+                                <div class="tip-box">Remember "IM" as "In Muscle"</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>IV</td>
+                            <td>Intravenous</td>
+                            <td>
+                                <div class="mnemonic"><strong>I</strong>nside <strong>V</strong>ein</div>
+                                <div class="tip-box">"V" for vein (both start with V)</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>SC/SQ</td>
+                            <td>Subcutaneous</td>
+                            <td>
+                                <div class="mnemonic"><strong>S</strong>kin <strong>C</strong>ontact or <strong>S</strong>ub <strong>Q</strong>utaneous</div>
+                                <div class="tip-box">SQ has a "Q" like "skin" has "kin"</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ID</td>
+                            <td>Intradermal</td>
+                            <td>
+                                <div class="mnemonic"><strong>I</strong>nside <strong>D</strong>ermis (skin layer)</div>
+                                <div class="tip-box">Think of "ID" as "In Dermis"</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>PR</td>
+                            <td>Per rectum</td>
+                            <td>
+                                <div class="mnemonic"><strong>P</strong>er <strong>R</strong>ectum</div>
+                                <div class="tip-box">"PR" sounds like "rear" which relates to rectal administration</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>PV</td>
+                            <td>Per vagina</td>
+                            <td>
+                                <div class="mnemonic"><strong>P</strong>er <strong>V</strong>agina</div>
+                                <div class="tip-box">"V" for vagina</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>TD</td>
+                            <td>Transdermal</td>
+                            <td>
+                                <div class="mnemonic"><strong>T</strong>hrough <strong>D</strong>ermis</div>
+                                <div class="tip-box">"TD" = TransDermal (both start with T and D)</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>INH</td>
+                            <td>Inhalation</td>
+                            <td>
+                                <div class="mnemonic"><strong>INH</strong>ale</div>
+                                <div class="tip-box">"INH" is the first three letters of "inhalation"</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="tip-box">
+                    <strong>Tip:</strong> Group routes by similar characteristics - injectable routes (IM, IV, SC, ID) and mucosal routes (PO, SL, PR, PV).
+                </div>
+            </div>
+            
+            <!-- Dosage Forms -->
+            <div class="category-section" id="dosage-forms">
+                <h2>Dosage Forms</h2>
+                
+                <table class="abbreviation-table">
+                    <thead>
+                        <tr>
+                            <th>Abbreviation</th>
+                            <th>Meaning</th>
+                            <th>Memorization Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>TAB</td>
+                            <td>Tablet</td>
+                            <td>
+                                <div class="mnemonic"><strong>TAB</strong>let - first three letters</div>
+                                <div class="tip-box">Simple abbreviation - just the beginning of the word</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CAP</td>
+                            <td>Capsule</td>
+                            <td>
+                                <div class="mnemonic"><strong>CAP</strong>sule - first three letters</div>
+                                <div class="tip-box">Easy to remember - the start of the word</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>SYR</td>
+                            <td>Syrup</td>
+                            <td>
+                                <div class="mnemonic"><strong>SYR</strong>up - first three letters</div>
+                                <div class="tip-box">Straightforward abbreviation</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>SUSP</td>
+                            <td>Suspension</td>
+                            <td>
+                                <div class="mnemonic"><strong>SUSP</strong>ended particles</div>
+                                <div class="tip-box">"SUSP" sounds like "suspended"</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>SOL</td>
+                            <td>Solution</td>
+                            <td>
+                                <div class="mnemonic"><strong>SOL</strong>ution - first three letters</div>
+                                <div class="tip-box">Simple abbreviation</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>ELIX</td>
+                            <td>Elixir</td>
+                            <td>
+                                <div class="mnemonic"><strong>ELIX</strong>ir - first four letters</div>
+                                <div class="tip-box">Close to the full word</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>SUPP</td>
+                            <td>Suppository</td>
+                            <td>
+                                <div class="mnemonic"><strong>SUPP</strong>ository - first four letters</div>
+                                <div class="tip-box">"SUPP" sounds like "sup" which can mean "to take"</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CREAM</td>
+                            <td>Cream</td>
+                            <td>
+                                <div class="mnemonic">Full word <strong>CREAM</strong></div>
+                                <div class="tip-box">Sometimes the full word is used for clarity</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>OINT</td>
+                            <td>Ointment</td>
+                            <td>
+                                <div class="mnemonic"><strong>OINT</strong>ment - first four letters</div>
+                                <div class="tip-box">Close to the full word</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>GTT</td>
+                            <td>Drops</td>
+                            <td>
+                                <div class="mnemonic"><strong>G</strong>utta (Latin for drop)</div>
+                                <div class="tip-box">Remember "GTT" from "gutta" - Latin for drop</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="tip-box">
+                    <strong>Tip:</strong> Most dosage form abbreviations are simply shortened versions of the full word. Focus on the exceptions like GTT (drops).
+                </div>
+            </div>
+            
+            <!-- Timing & Instructions -->
+            <div class="category-section" id="timing">
+                <h2>Timing & Instructions</h2>
+                
+                <table class="abbreviation-table">
+                    <thead>
+                        <tr>
+                            <th>Abbreviation</th>
+                            <th>Meaning</th>
+                            <th>Memorization Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>AC</td>
+                            <td>Before meals</td>
+                            <td>
+                                <div class="mnemonic"><strong>A</strong>nte <strong>C</strong>ibum (Latin for "before food")</div>
+                                <div class="tip-box">"A" comes before "C" in alphabet, AC = before meals</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>PC</td>
+                            <td>After meals</td>
+                            <td>
+                                <div class="mnemonic"><strong>P</strong>ost <strong>C</strong>ibum (Latin for "after food")</div>
+                                <div class="tip-box">"P" comes after "C" in the second half of alphabet, PC = after meals</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>HS</td>
+                            <td>At bedtime</td>
+                            <td>
+                                <div class="mnemonic"><strong>H</strong>ora <strong>S</strong>omni (Latin for "hour of sleep")</div>
+                                <div class="tip-box">Think of "HS" as "Home & Sleep" time</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>STAT</td>
+                            <td>Immediately</td>
+                            <td>
+                                <div class="mnemonic"><strong>STAT</strong> = "statim" (Latin for "immediately")</div>
+                                <div class="tip-box">Think of "STAT" as "Straight Away Treatment"</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>QD</td>
+                            <td>Every day</td>
+                            <td>
+                                <div class="mnemonic"><strong>Q</strong>uaque <strong>D</strong>ie (Latin for "every day")</div>
+                                <div class="tip-box">"Q" for "every", "D" for "day"</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>QOD</td>
+                            <td>Every other day</td>
+                            <td>
+                                <div class="mnemonic"><strong>Q</strong>uaque <strong>O</strong>ther <strong>D</strong>ay</div>
+                                <div class="tip-box">"O" for "other" between Q and D</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>BID</td>
+                            <td>Twice a day</td>
+                            <td>
+                                <div class="mnemonic"><strong>B</strong>is <strong>I</strong>n <strong>D</strong>ie (Latin for "twice in a day")</div>
+                                <div class="tip-box">Think of "BID" as "Breakfast In Dinner" - two main meals</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>TID</td>
+                            <td>Three times a day</td>
+                            <td>
+                                <div class="mnemonic"><strong>T</strong>er <strong>I</strong>n <strong>D</strong>ie (Latin for "three times in a day")</div>
+                                <div class="tip-box">"TID" = "Three Important Doses"</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>QID</td>
+                            <td>Four times a day</td>
+                            <td>
+                                <div class="mnemonic"><strong>Q</strong>uater <strong>I</strong>n <strong>D</strong>ie (Latin for "four times in a day")</div>
+                                <div class="tip-box">"QID" = "Quarterly In Day" (4 parts of day)</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>PRN</td>
+                            <td>As needed</td>
+                            <td>
+                                <div class="mnemonic"><strong>P</strong>ro <strong>R</strong>e <strong>N</strong>ata (Latin for "as the circumstance arises")</div>
+                                <div class="tip-box">"PRN" = "Patient Requests Now"</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="tip-box">
+                    <strong>Tip:</strong> Create a mental timeline: AC (before meals) → PC (after meals) → HS (bedtime). Notice that AC and PC are opposites.
+                </div>
+            </div>
+            
+            <!-- Eyes & Ears -->
+            <div class="category-section" id="eyes-ears">
+                <h2>Eyes & Ears Abbreviations</h2>
+                
+                <table class="abbreviation-table">
+                    <thead>
+                        <tr>
+                            <th>Abbreviation</th>
+                            <th>Meaning</th>
+                            <th>Memorization Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>OD</td>
+                            <td>Right eye</td>
+                            <td>
+                                <div class="mnemonic"><strong>O</strong>culus <strong>D</strong>exter (Latin for "right eye")</div>
+                                <div class="tip-box">"D" for "dexter" which means right (like dexterity)</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>OS</td>
+                            <td>Left eye</td>
+                            <td>
+                                <div class="mnemonic"><strong>O</strong>culus <strong>S</strong>inister (Latin for "left eye")</div>
+                                <div class="tip-box">"S" for "sinister" which means left (historically associated with bad luck)</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>OU</td>
+                            <td>Both eyes</td>
+                            <td>
+                                <div class="mnemonic"><strong>O</strong>culus <strong>U</strong>terque (Latin for "each eye")</div>
+                                <div class="tip-box">"U" for "uterque" meaning "each" or "both"</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>AD</td>
+                            <td>Right ear</td>
+                            <td>
+                                <div class="mnemonic"><strong>A</strong>uris <strong>D</strong>extra (Latin for "right ear")</div>
+                                <div class="tip-box">"D" for "dextra" meaning right</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>AS</td>
+                            <td>Left ear</td>
+                            <td>
+                                <div class="mnemonic"><strong>A</strong>uris <strong>S</strong>inistra (Latin for "left ear")</div>
+                                <div class="tip-box">"S" for "sinistra" meaning left</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>AU</td>
+                            <td>Both ears</td>
+                            <td>
+                                <div class="mnemonic"><strong>A</strong>uris <strong>U</strong>terque (Latin for "each ear")</div>
+                                <div class="tip-box">"U" for "uterque" meaning "each" or "both"</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="mnemonic">
+                    <strong>Memory Aid:</strong> Create a visual - For eyes: OD (Right), OS (Left), OU (Both). For ears: AD (Right), AS (Left), AU (Both). Notice the pattern: D=Right, S=Left, U=Both.
+                </div>
+                
+                <div class="warning-box">
+                    <strong>Critical Safety Note:</strong> Confusing OD (right eye) with OS (left eye) can lead to serious medication errors. Always double-check these abbreviations and consider writing out "right eye" and "left eye" for clarity.
+                </div>
+            </div>
+            
+            <!-- Latin Terms -->
+            <div class="category-section" id="latin-terms">
+                <h2>Latin Terms & Additional Abbreviations</h2>
+                
+                <table class="abbreviation-table">
+                    <thead>
+                        <tr>
+                            <th>Abbreviation</th>
+                            <th>Meaning</th>
+                            <th>Memorization Tip</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>AA</td>
+                            <td>Of each</td>
+                            <td>
+                                <div class="mnemonic"><strong>A</strong>na (Greek for "of each")</div>
+                                <div class="tip-box">Think of "AA" as "Add All" equal amounts</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>AD</td>
+                            <td>Right ear</td>
+                            <td>
+                                <div class="mnemonic"><strong>A</strong>uris <strong>D</strong>extra</div>
+                                <div class="tip-box">"AD" = "Auris Dextra" (right ear)</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>AS</td>
+                            <td>Left ear</td>
+                            <td>
+                                <div class="mnemonic"><strong>A</strong>uris <strong>S</strong>inistra</div>
+                                <div class="tip-box">"AS" = "Auris Sinistra" (left ear)</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>AU</td>
+                            <td>Both ears</td>
+                            <td>
+                                <div class="mnemonic"><strong>A</strong>uris <strong>U</strong>terque</div>
+                                <div class="tip-box">"AU" = "Auris Uterque" (both ears)</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>BID</td>
+                            <td>Twice a day</td>
+                            <td>
+                                <div class="mnemonic"><strong>B</strong>is <strong>I</strong>n <strong>D</strong>ie</div>
+                                <div class="tip-box">"BID" = "Bis In Die" (twice a day)</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>CAP</td>
+                            <td>Capsule</td>
+                            <td>
+                                <div class="mnemonic"><strong>CAP</strong>sule</div>
+                                <div class="tip-box">Simple abbreviation from the word</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>DISP</td>
+                            <td>Dispense</td>
+                            <td>
+                                <div class="mnemonic"><strong>DISP</strong>ense</div>
+                                <div class="tip-box">First four letters of the word</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>GTT</td>
+                            <td>Drops</td>
+                            <td>
+                                <div class="mnemonic"><strong>G</strong>uttae (Latin for drops)</div>
+                                <div class="tip-box">"GTT" from "guttae" - Latin for drops</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>OD</td>
+                            <td>Right eye</td>
+                            <td>
+                                <div class="mnemonic"><strong>O</strong>culus <strong>D</strong>exter</div>
+                                <div class="tip-box">"OD" = "Oculus Dexter" (right eye)</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>OS</td>
+                            <td>Left eye</td>
+                            <td>
+                                <div class="mnemonic"><strong>O</strong>culus <strong>S</strong>inister</div>
+                                <div class="tip-box">"OS" = "Oculus Sinister" (left eye)</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>OU</td>
+                            <td>Both eyes</td>
+                            <td>
+                                <div class="mnemonic"><strong>O</strong>culus <strong>U</strong>terque</div>
+                                <div class="tip-box">"OU" = "Oculus Uterque" (both eyes)</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>PC</td>
+                            <td>After meals</td>
+                            <td>
+                                <div class="mnemonic"><strong>P</strong>ost <strong>C</strong>ibum</div>
+                                <div class="tip-box">"PC" = "Post Cibum" (after food)</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>PR</td>
+                            <td>Per rectum</td>
+                            <td>
+                                <div class="mnemonic"><strong>P</strong>er <strong>R</strong>ectum</div>
+                                <div class="tip-box">"PR" = "Per Rectum"</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>PRN</td>
+                            <td>As needed</td>
+                            <td>
+                                <div class="mnemonic"><strong>P</strong>ro <strong>R</strong>e <strong>N</strong>ata</div>
+                                <div class="tip-box">"PRN" = "Pro Re Nata" (as needed)</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Q</td>
+                            <td>Every</td>
+                            <td>
+                                <div class="mnemonic"><strong>Q</strong>uaque (Latin for every)</div>
+                                <div class="tip-box">"Q" = "Quaque" (every)</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>QD</td>
+                            <td>Every day</td>
+                            <td>
+                                <div class="mnemonic"><strong>Q</strong>uaque <strong>D</strong>ie</div>
+                                <div class="tip-box">"QD" = "Quaque Die" (every day)</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>QID</td>
+                            <td>Four times a day</td>
+                            <td>
+                                <div class="mnemonic"><strong>Q</strong>uater <strong>I</strong>n <strong>D</strong>ie</div>
+                                <div class="tip-box">"QID" = "Quater In Die" (four times a day)</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>QOD</td>
+                            <td>Every other day</td>
+                            <td>
+                                <div class="mnemonic"><strong>Q</strong>uaque <strong>O</strong>ther <strong>D</strong>ay</div>
+                                <div class="tip-box">"QOD" = "Quaque Other Day"</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>RX</td>
+                            <td>Prescription</td>
+                            <td>
+                                <div class="mnemonic"><strong>R</strong>ecipe (Latin for take)</div>
+                                <div class="tip-box">"RX" from "Recipe" - Latin for "take"</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>TAB</td>
+                            <td>Tablet</td>
+                            <td>
+                                <div class="mnemonic"><strong>TAB</strong>let</div>
+                                <div class="tip-box">First three letters of the word</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>TID</td>
+                            <td>Three times a day</td>
+                            <td>
+                                <div class="mnemonic"><strong>T</strong>er <strong>I</strong>n <strong>D</strong>ie</div>
+                                <div class="tip-box">"TID" = "Ter In Die" (three times a day)</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>UD</td>
+                            <td>As directed</td>
+                            <td>
+                                <div class="mnemonic"><strong>U</strong>t <strong>D</strong>ictum</div>
+                                <div class="tip-box">"UD" = "Ut Dictum" (as directed)</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="tip-box">
+                    <strong>Tip:</strong> Many pharmaceutical abbreviations come from Latin. Learning a few key Latin words (like "oculus" for eye, "auris" for ear, "die" for day) can help you decipher many abbreviations.
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section">
+            <h2>General Memorization Strategies</h2>
+            
+            <h3>1. Create Personal Associations</h3>
+            <p>Link abbreviations to personal experiences or familiar concepts:</p>
+            <ul>
+                <li><strong>BID</strong> - Think of your two main meals (breakfast and dinner)</li>
+                <li><strong>TID</strong> - Remember three important times of day (morning, noon, night)</li>
+                <li><strong>QID</strong> - Associate with four quarters of a day</li>
+            </ul>
+            
+            <h3>2. Use Mnemonic Devices</h3>
+            <p>Create memorable phrases or sentences:</p>
+            <ul>
+                <li><strong>AC and PC</strong> - "AC comes before PC in the alphabet, just like before meals comes after meals"</li>
+                <li><strong>OD, OS, OU</strong> - "Doctor's Order: OD=Right, OS=Left, OU=Both"</li>
+                <li><strong>QHS</strong> - "Quiet Hours for Sleep"</li>
+            </ul>
+            
+            <h3>3. Group by Similarities</h3>
+            <p>Study related abbreviations together:</p>
+            <ul>
+                <li>Frequency abbreviations (QD, BID, TID, QID)</li>
+                <li>Route abbreviations (PO, PR, PV, SL)</li>
+                <li>Eye and ear abbreviations (OD, OS, OU, AD, AS, AU)</li>
+            </ul>
+            
+            <h3>4. Practice with Flashcards</h3>
+            <p>Create physical or digital flashcards with the abbreviation on one side and the meaning on the other. Regular review is key to retention.</p>
+            
+            <h3>5. Apply in Context</h3>
+            <p>Practice writing mock prescriptions or interpreting sample prescriptions to use abbreviations in realistic scenarios.</p>
+            
+            <div class="warning-box">
+                <strong>Important Safety Reminder:</strong> When in doubt, always write out the full instruction rather than using an abbreviation. Patient safety should always be the priority.
+            </div>
+        </div>
+        
+        <footer>
+            <p>MedQuiz Pharmaceutical Abbreviations Guide | For educational purposes only</p>
+            <p>Always verify abbreviations with current institutional policies and guidelines</p>
+        </footer>
+    </div>
+
+    <script>
+        // Category navigation functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            const categorySections = document.querySelectorAll('.category-section');
+            
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    
+                    // Remove active class from all buttons and sections
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    categorySections.forEach(section => section.classList.remove('active'));
+                    
+                    // Add active class to clicked button and corresponding section
+                    this.classList.add('active');
+                    document.getElementById(category).classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

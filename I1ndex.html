@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy Quiz - Chapter 1</title>
+    <style>
+        :root {
+            --primary-color: #4a6fa5;
+            --secondary-color: #166088;
+            --correct-color: #4CAF50;
+            --incorrect-color: #f44336;
+            --light-color: #f5f5f5;
+            --dark-color: #333;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: var(--dark-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .question-container {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 8px;
+            background-color: var(--light-color);
+            transition: all 0.3s ease;
+        }
+        
+        .question-text {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .options {
+            list-style-type: none;
+        }
+        
+        .option {
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .option:hover {
+            background-color: #e9f7fe;
+            border-color: var(--primary-color);
+        }
+        
+        .option.selected {
+            background-color: #e1f5fe;
+            border-color: var(--primary-color);
+        }
+        
+        .option.correct {
+            background-color: #e8f5e9;
+            border-color: var(--correct-color);
+        }
+        
+        .option.incorrect {
+            background-color: #ffebee;
+            border-color: var(--incorrect-color);
+        }
+        
+        .explanation {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            border-left: 4px solid var(--primary-color);
+            display: none;
+        }
+        
+        .memorization-tip {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            border-radius: 4px;
+            font-style: italic;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        .results {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: var(--light-color);
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .score {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .review-questions {
+            margin-top: 20px;
+            text-align: left;
+        }
+        
+        .review-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: white;
+        }
+        
+        .correct-answer {
+            color: var(--correct-color);
+            font-weight: bold;
+        }
+        
+        .user-answer.correct {
+            color: var(--correct-color);
+        }
+        
+        .user-answer.incorrect {
+            color: var(--incorrect-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Pharmacy Quiz - Chapter 1</h1>
+            <p>Introduction to Pharmacy Profession & Healthcare System in Ethiopia</p>
+        </header>
+        
+        <div class="progress">
+            <span>Question: <span id="current-question">1</span>/<span id="total-questions">50</span></span>
+            <span>Score: <span id="score">0</span></span>
+        </div>
+        
+        <div id="quiz-container">
+            <!-- Questions will be inserted here by JavaScript -->
+        </div>
+        
+        <div class="navigation">
+            <button id="prev-btn" disabled>Previous</button>
+            <button id="next-btn">Next</button>
+        </div>
+        
+        <div id="results" class="results">
+            <!-- Results will be inserted here by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Quiz questions array
+        const questions = [
+            {
+                question: "What does HCS stand for in the context of Ethiopian healthcare?",
+                options: [
+                    "Health Care System",
+                    "Hospital Care Services",
+                    "Healthcare Coordination System",
+                    "Health Community Services"
+                ],
+                correctAnswer: 0,
+                explanation: "HCS stands for Health Care System, which is defined as the organization of people, institutions & resources to deliver health care service to meet the health needs of target population.",
+                memorizationTip: "Remember HCS = Health Care System - the foundational structure of healthcare delivery."
+            },
+            {
+                question: "When was the Ethiopian healthcare system founded?",
+                options: [
+                    "1908",
+                    "1952",
+                    "1963",
+                    "1985"
+                ],
+                correctAnswer: 0,
+                explanation: "The Ethiopian healthcare system was founded in 1908, with basic health services established in 1952.",
+                memorizationTip: "Think: 1908 - early 20th century when modern healthcare began in Ethiopia."
+            },
+            {
+                question: "What was the main focus of the second five-year development plan launched in 1963?",
+                options: [
+                    "Preventive aspects",
+                    "Hospital construction",
+                    "Medical education",
+                    "Pharmaceutical manufacturing"
+                ],
+                correctAnswer: 0,
+                explanation: "The second five-year development plan launched in 1963 emphasized preventive aspects of healthcare.",
+                memorizationTip: "1963 plan = Prevention focus. Remember 'prevention is better than cure'."
+            },
+            {
+                question: "Which government revised the health policy to place more emphasis on Primary Health Care?",
+                options: [
+                    "The socialist government",
+                    "The imperial government",
+                    "The transitional government",
+                    "The current government"
+                ],
+                correctAnswer: 0,
+                explanation: "The socialist government revised the health policy to place more emphasis on Primary Health Care, Rural Health Services, Prevention and Control of Common Diseases.",
+                memorizationTip: "Socialist government = Primary Health Care emphasis."
+            },
+            {
+                question: "What was the objective of the Alma-Ata declaration?",
+                options: [
+                    "Health For All by 2000",
+                    "Universal Health Coverage",
+                    "Primary Healthcare for All",
+                    "Eradication of Infectious Diseases"
+                ],
+                correctAnswer: 0,
+                explanation: "The objective was to fulfill the Alma-Ata declaration of Health For All (HFA) by 2000.",
+                memorizationTip: "Alma-Ata = Health For All by 2000 - a famous global health initiative."
+            },
+            {
+                question: "How many tiers did the Dergue's health care system consist of?",
+                options: [
+                    "Six tiers",
+                    "Four tiers",
+                    "Three tiers",
+                    "Five tiers"
+                ],
+                correctAnswer: 0,
+                explanation: "A ten year health sector plan was prepared by the Dergue (1985) based on a six-tier health care system.",
+                memorizationTip: "Dergue = 6 tiers (Community Health Service, Health Stations, Health Centers, District Hospitals, Regional Hospitals, Central Hospitals)."
+            },
+            {
+                question: "What was the revised tier system implemented in the early 1990s?",
+                options: [
+                    "Four-tier system",
+                    "Three-tier system",
+                    "Five-tier system",
+                    "Two-tier system"
+                ],
+                correctAnswer: 0,
+                explanation: "The six tier system was tailored to a four-tier Health Care System consisting of Primary Health Care Units, District hospitals, Regional hospitals, and Specialized/Teaching Hospitals.",
+                memorizationTip: "1990s revision = 4 tiers (Primary Health Care Units, District, Regional, Specialized/Teaching)."
+            },
+            {
+                question: "What is the Health Service Extension Package intended to do?",
+                options: [
+                    "Reach people at grass root level",
+                    "Provide specialized hospital care",
+                    "Train medical specialists",
+                    "Manufacture pharmaceuticals"
+                ],
+                correctAnswer: 0,
+                explanation: "Health Service Extension Package is intended to reach people at grass root level with community-based health interventions.",
+                memorizationTip: "Extension = Extending to grassroots level."
+            },
+            {
+                question: "Which of the following is NOT one of the main areas of the Health Service Extension Package?",
+                options: [
+                    "Surgical interventions",
+                    "Hygiene and Environmental Sanitation",
+                    "Disease Prevention and Control",
+                    "Family Health Service"
+                ],
+                correctAnswer: 0,
+                explanation: "The Health Service Extension Package works on four main areas: Hygiene and Environmental Sanitation, Disease Prevention and Control, Family Health Service, and Health Education.",
+                memorizationTip: "Remember H-E-D-F: Hygiene, Environmental, Disease, Family - Surgical interventions are not included."
+            },
+            {
+                question: "What are the three pillars of the Ethiopian health sector since 2001 E.C.?",
+                options: [
+                    "Service provider, Service purchaser, Health regulator",
+                    "Prevention, Treatment, Rehabilitation",
+                    "Public, Private, NGO sectors",
+                    "Urban, Rural, Remote areas"
+                ],
+                correctAnswer: 0,
+                explanation: "The health sector is organized around three pillars: Service provider, Service purchaser, and Health regulator.",
+                memorizationTip: "Three pillars: Provide, Purchase, Regulate."
+            },
+            {
+                question: "Which model of pharmacy practice involves ensuring patients understand key aspects of medication use?",
+                options: [
+                    "Counseling Model",
+                    "Dispensing Model",
+                    "Pharmaceutical Care Model",
+                    "Clinical Model"
+                ],
+                correctAnswer: 0,
+                explanation: "The Counseling Model of Practice is responsible for ensuring patients understand key aspects of the use of medication and devices, and provision of drug related information to the public.",
+                memorizationTip: "Counseling = Patient understanding and education."
+            },
+            {
+                question: "What does the Pharmaceutical Care Model involve?",
+                options: [
+                    "Cooperating with patients and professionals in therapeutic planning",
+                    "Only dispensing medications",
+                    "Selling over-the-counter drugs",
+                    "Manufacturing pharmaceuticals"
+                ],
+                correctAnswer: 0,
+                explanation: "Pharmaceutical Care Model involves pharmacist cooperation with a patient and other professionals in designing, implementing and monitoring a therapeutic plan.",
+                memorizationTip: "Pharmaceutical Care = Collaborative therapeutic planning."
+            },
+            {
+                question: "Which pharmacy department deals with how drugs interact within biological systems?",
+                options: [
+                    "Pharmacology and Therapeutics",
+                    "Pharmaceutics",
+                    "Pharmaceutical Chemistry",
+                    "Pharmacognosy"
+                ],
+                correctAnswer: 0,
+                explanation: "Pharmacology and Therapeutics deals with how drugs interact within biological systems to affect function of the body.",
+                memorizationTip: "Pharmacology = Drug interactions with biological systems."
+            },
+            {
+                question: "What does Pharmacognosy study?",
+                options: [
+                    "Natural products in crude form",
+                    "Drug synthesis",
+                    "Dosage forms",
+                    "Drug regulations"
+                ],
+                correctAnswer: 0,
+                explanation: "Pharmacognosy is the study of natural products (plant, animals, mineral in nature) in crude form used as drugs or for preparation of drugs.",
+                memorizationTip: "Pharmacognosy = Natural products (think 'cognosy' sounds like 'cognition of nature')."
+            },
+            {
+                question: "Which department deals with the conversion of chemicals into medications or dosage forms?",
+                options: [
+                    "Pharmaceutics",
+                    "Pharmacology",
+                    "Pharmaceutical Chemistry",
+                    "Pharmacy Practice"
+                ],
+                correctAnswer: 0,
+                explanation: "Pharmaceutics deals with the conversion of chemicals that are natural, synthetic or semi synthetic into medication or dosage forms.",
+                memorizationTip: "Pharmaceutics = Making pharmaceutical products (think 'ceutics' sounds like 'products')."
+            },
+            {
+                question: "What is the focus of Pharmaceutical Chemistry?",
+                options: [
+                    "Synthesis and quality control of drugs",
+                    "Patient counseling",
+                    "Natural product extraction",
+                    "Drug distribution"
+                ],
+                correctAnswer: 0,
+                explanation: "Pharmaceutical Chemistry is involved in the synthesis and semi-synthesis of drugs and in the quality control process.",
+                memorizationTip: "Pharmaceutical Chemistry = Chemical synthesis and quality control."
+            },
+            {
+                question: "Which area deals with practical principles of pharmacy in various practice settings?",
+                options: [
+                    "Pharmacy Practice",
+                    "Pharmaceutics",
+                    "Pharmacology",
+                    "Pharmacognosy"
+                ],
+                correctAnswer: 0,
+                explanation: "Pharmacy Practice deals with the practical principles of the pharmacy profession in various pharmacy practice settings.",
+                memorizationTip: "Pharmacy Practice = Practical application of pharmacy knowledge."
+            },
+            {
+                question: "In which practice setting do pharmacists dispense pharmaceuticals and provide drug information on OTC and POM?",
+                options: [
+                    "Community Pharmacy",
+                    "Hospital Pharmacy",
+                    "Industrial Pharmacy",
+                    "Nuclear Pharmacy"
+                ],
+                correctAnswer: 0,
+                explanation: "Community Pharmacy involves dispensing pharmaceuticals, providing drug information on OTC and POM, and advice about home health supplies.",
+                memorizationTip: "Community Pharmacy = Serving the general public directly."
+            },
+            {
+                question: "What is the role of pharmacists in Nuclear Pharmacy?",
+                options: [
+                    "Produce radioactive drugs for diagnosis and treatment",
+                    "Dispense medications in hospitals",
+                    "Manufacture pharmaceuticals",
+                    "Regulate drug quality"
+                ],
+                correctAnswer: 0,
+                explanation: "Nuclear Pharmacy produces radioactive drugs used for diagnosis and treatment.",
+                memorizationTip: "Nuclear Pharmacy = Radioactive drugs (think 'nuclear' = radioactive)."
+            },
+            {
+                question: "Which of these is NOT typically a role of industrial pharmacists?",
+                options: [
+                    "Direct patient care in hospitals",
+                    "Production and quality control supervisory",
+                    "Clinical research",
+                    "Marketing and administration"
+                ],
+                correctAnswer: 0,
+                explanation: "Industrial pharmacists hold responsibilities for production, quality control, clinical research, marketing and administration, but not direct patient care in hospitals.",
+                memorizationTip: "Industrial pharmacy = Industry roles, not direct patient care."
+            },
+            {
+                question: "In which ancient civilization did the Asipu and Asu practice healing?",
+                options: [
+                    "Babylonian",
+                    "Egyptian",
+                    "Greek",
+                    "Chinese"
+                ],
+                correctAnswer: 0,
+                explanation: "In ancient Babylon, medical care was provided by two practitioners: Asipu (magical healers) and Asu (empirical healers).",
+                memorizationTip: "Babylon = Asipu and Asu (think 'Babylon' has two 'b's like two practitioners)."
+            },
+            {
+                question: "Who is traditionally regarded as the 'father of medicine'?",
+                options: [
+                    "Hippocrates",
+                    "Galen",
+                    "Dioscorides",
+                    "Shen Nung"
+                ],
+                correctAnswer: 0,
+                explanation: "Hippocrates (460-377 BC) is traditionally regarded as the 'father of medicine'.",
+                memorizationTip: "Hippocrates = Father of medicine (famous Hippocratic Oath)."
+            },
+            {
+                question: "What did Hippocrates believe was the cause of illness?",
+                options: [
+                    "Disturbances in the balance of humors",
+                    "Punishment from gods",
+                    "Bad air (miasma)",
+                    "Imbalance of yin and yang"
+                ],
+                correctAnswer: 0,
+                explanation: "Hippocrates believed that illness is a result of disturbances in the balance of the four humors: black bile, blood, yellow bile and phlegm.",
+                memorizationTip: "Hippocrates = Four humors theory."
+            },
+            {
+                question: "Who wrote 'De materia medica', considered a standard encyclopedia of drugs until the 16th century?",
+                options: [
+                    "Dioscorides",
+                    "Galen",
+                    "Hippocrates",
+                    "Avicenna"
+                ],
+                correctAnswer: 0,
+                explanation: "Dioscorides recorded a collection of drugs in 'De materia medica', which described 500 plants and remedies and was considered a standard encyclopedia until the 16th century.",
+                memorizationTip: "Dioscorides = De materia medica (think 'D' for Dioscorides and Drugs)."
+            },
+            {
+                question: "What are 'Galenicals'?",
+                options: [
+                    "Pharmaceuticals prepared by mechanical means",
+                    "Herbal remedies",
+                    "Synthetic drugs",
+                    "Radioactive pharmaceuticals"
+                ],
+                correctAnswer: 0,
+                explanation: "Galenicals are pharmaceuticals prepared by mechanical means, named after Claudius Galen.",
+                memorizationTip: "Galenicals = Galen's preparations (mechanical means)."
+            },
+            {
+                question: "During the Middle Ages, who primarily preserved and prepared medicines?",
+                options: [
+                    "Monks",
+                    "Physicians",
+                    "Apothecaries",
+                    "Alchemists"
+                ],
+                correctAnswer: 0,
+                explanation: "During the Middle Ages, monks gathered herbs, raised them in gardens, and prepared medicines according to the art of apothecary.",
+                memorizationTip: "Middle Ages = Monastic medicine preservation."
+            },
+            {
+                question: "Where were the first privately owned drug stores established?",
+                options: [
+                    "Baghdad",
+                    "Rome",
+                    "Athens",
+                    "Florence"
+                ],
+                correctAnswer: 0,
+                explanation: "Arabs established the first private owned drug stores in Baghdad in the eighth century.",
+                memorizationTip: "First drug stores = Baghdad in 8th century (Arab contribution)."
+            },
+            {
+                question: "Who was known as Avicenna in the Western world?",
+                options: [
+                    "Ali ibn Sina",
+                    "Rhazes",
+                    "Galen",
+                    "Paracelsus"
+                ],
+                correctAnswer: 0,
+                explanation: "Ali ibn Sina (980 to 1037 AD) was known by the western world as Avicenna, author of Canon Medicinae.",
+                memorizationTip: "Avicenna = Ali ibn Sina (famous Persian polymath)."
+            },
+            {
+                question: "Where was pharmacy first legally separated from medicine in 1231 AD?",
+                options: [
+                    "Sicily and southern Italy",
+                    "France",
+                    "England",
+                    "Spain"
+                ],
+                correctAnswer: 0,
+                explanation: "Pharmacy first became legally separated from medicine in Sicily and southern Italy in 1231 AD under Frederick II.",
+                memorizationTip: "1231 AD = First legal separation of pharmacy and medicine in Sicily/Italy."
+            },
+            {
+                question: "What was the first official pharmacopoeia and where did it originate?",
+                options: [
+                    "Nuovo Receptario in Florence",
+                    "De materia medica in Greece",
+                    "Canon Medicinae in Persia",
+                    "Dispensatorium in Germany"
+                ],
+                correctAnswer: 0,
+                explanation: "The first official pharmacopoeia, Nuovo Receptario, originated in Florence in 1498.",
+                memorizationTip: "First pharmacopoeia = Nuovo Receptario, Florence 1498."
+            },
+            {
+                question: "Who advocated for chemically prepared drugs from plants and minerals?",
+                options: [
+                    "Paracelsus",
+                    "Hippocrates",
+                    "Galen",
+                    "Dioscorides"
+                ],
+                correctAnswer: 0,
+                explanation: "Paracelsus (1493-1541) was the most important advocate of chemically prepared drugs from crude plants and mineral substances.",
+                memorizationTip: "Paracelsus = Chemical preparation of drugs (pioneer of medicinal chemistry)."
+            },
+            {
+                question: "What was the 'doctrine of signature' preached by Paracelsus?",
+                options: [
+                    "Belief that God placed signs on healing substances indicating their use",
+                    "Theory that drugs should be signed by physicians",
+                    "Idea that pharmacy requires special signatures",
+                    "Concept that drugs have specific molecular signatures"
+                ],
+                correctAnswer: 0,
+                explanation: "Paracelsus preached the 'doctrine of signature' - a belief that God had placed a sign on healing substances indicating their use against disease.",
+                memorizationTip: "Doctrine of signature = Natural signs indicate therapeutic uses."
+            },
+            {
+                question: "When was the transitional period for pharmacy and pharmaceutical education?",
+                options: [
+                    "1870-1920",
+                    "1700-1750",
+                    "1950-2000",
+                    "1600-1650"
+                ],
+                correctAnswer: 0,
+                explanation: "The period between 1870 and 1920 was transitional for pharmacy and pharmaceutical education.",
+                memorizationTip: "Transition period = 1870-1920 (late 19th to early 20th century)."
+            },
+            {
+                question: "What opened the era of clinical pharmacy in the 1960s?",
+                options: [
+                    "APA creating new ideas to increase pharmacist involvement in patient care",
+                    "Discovery of antibiotics",
+                    "Development of synthetic drugs",
+                    "Computerization of pharmacy records"
+                ],
+                correctAnswer: 0,
+                explanation: "APA (American Pharmaceutical Association) created new ideas to increase involvement of pharmacists in patient care, thereby opening the era of clinical pharmacy in the 1960s.",
+                memorizationTip: "1960s = APA initiatives began clinical pharmacy era."
+            },
+            {
+                question: "When and where was the International Pharmaceutical Federation (FIP) founded?",
+                options: [
+                    "1911 in The Hague",
+                    "1865 in Braunschweig",
+                    "1920 in London",
+                    "1900 in Paris"
+                ],
+                correctAnswer: 0,
+                explanation: "The International Pharmaceutical Federation (FIP) was founded in 1911 with headquarters and secretariat at The Hague.",
+                memorizationTip: "FIP founded = 1911 in The Hague (remember 'FIP' = Federation Internationale Pharmaceutique)."
+            },
+            {
+                question: "What is a pharmacopoeia?",
+                options: [
+                    "Official standards for purity, strength, quality and analysis of drugs",
+                    "A list of hospital-approved drugs",
+                    "A collection of drug information for patients",
+                    "A record of drug prescriptions"
+                ],
+                correctAnswer: 0,
+                explanation: "Pharmacopoeia presents official standards for purity, strength, quality and analysis of drugs, authorized by governments or international agencies.",
+                memorizationTip: "Pharmacopoeia = Official drug standards (think 'poeia' sounds like 'standards')."
+            },
+            {
+                question: "What are drugs defined as?",
+                options: [
+                    "Substances used to treat illness, relieve symptoms, or modify chemical processes",
+                    "Only synthetic chemicals",
+                    "Substances that cure diseases",
+                    "Natural plant extracts only"
+                ],
+                correctAnswer: 0,
+                explanation: "Drugs are any substances used to treat an illness, relieve a symptom, or modify a chemical process in the body for a specific purpose.",
+                memorizationTip: "Drug definition = Substances with therapeutic purpose."
+            },
+            {
+                question: "What is a dosage form?",
+                options: [
+                    "The physical form of a dose of a chemical compound used as a drug",
+                    "The chemical structure of a drug",
+                    "The method of drug administration",
+                    "The strength of a medication"
+                ],
+                correctAnswer: 0,
+                explanation: "A dosage form is the physical form of a dose of a chemical compound used as a drug or medication intended for administration.",
+                memorizationTip: "Dosage form = Physical form for administration."
+            },
+            {
+                question: "Which of these is a semi-solid dosage form?",
+                options: [
+                    "Cream",
+                    "Tablet",
+                    "Capsule",
+                    "Solution"
+                ],
+                correctAnswer: 0,
+                explanation: "Creams are semi-solid emulsions for external use, classified as semi-solid dosage forms.",
+                memorizationTip: "Cream = Semi-solid (think of the consistency of cream)."
+            },
+            {
+                question: "What are elixirs?",
+                options: [
+                    "Clear, flavored, sweetened hydro-alcoholic liquids for oral administration",
+                    "Solid dosage forms in gelatin shells",
+                    "Semi-solid preparations for external use",
+                    "Powdered medications"
+                ],
+                correctAnswer: 0,
+                explanation: "Elixirs are clear, pleasantly flavored, sweetened and attractively colored hydro-alcoholic liquid intended for oral administration.",
+                memorizationTip: "Elixirs = Liquid preparations (think 'elixir' as a magical potion = liquid)."
+            },
+            {
+                question: "What is the difference between syrups and elixirs?",
+                options: [
+                    "Syrups are sweeter and more viscous than elixirs",
+                    "Elixirs are sweeter and more viscous than syrups",
+                    "Syrups contain alcohol while elixirs do not",
+                    "Elixirs are for external use only"
+                ],
+                correctAnswer: 0,
+                explanation: "Elixirs are less sweet and less viscous than syrups.",
+                memorizationTip: "Syrups = Thicker and sweeter (like maple syrup); Elixirs = Thinner and less sweet."
+            },
+            {
+                question: "What are emulsions?",
+                options: [
+                    "Heterogeneous systems of immiscible liquids dispersed as droplets",
+                    "Homogeneous solutions of drugs",
+                    "Solid dispersions in polymers",
+                    "Gaseous medications"
+                ],
+                correctAnswer: 0,
+                explanation: "Emulsions are heterogeneous systems consisting of at least one immiscible liquid that is intimately dispersed in another liquid in the form of droplets or globules.",
+                memorizationTip: "Emulsions = Oil and water mixtures (think of salad dressing)."
+            },
+            {
+                question: "What are gargles used for?",
+                options: [
+                    "To prevent or treat throat infections",
+                    "To administer drugs rectally",
+                    "To apply medications to the skin",
+                    "To deliver drugs to the lungs"
+                ],
+                correctAnswer: 0,
+                explanation: "Gargles are aqueous solutions used to prevent or treat throat infections.",
+                memorizationTip: "Gargles = For throat (think of gargling when you have a sore throat)."
+            },
+            {
+                question: "What are implants?",
+                options: [
+                    "Small, sterile, solid dosage forms for implantation for sustained release",
+                    "Liquid medications for injection",
+                    "Topical patches",
+                    "Inhalation devices"
+                ],
+                correctAnswer: 0,
+                explanation: "Implants are small, sterile, solid dosage forms containing concentrated drug for implantation in the body for sustained release.",
+                memorizationTip: "Implants = Implanted for sustained release (think of contraceptive implants)."
+            },
+            {
+                question: "What are linctuses?",
+                options: [
+                    "Viscous liquids for cough relief",
+                    "Solid lozenges",
+                    "Powders for inhalation",
+                    "Solutions for injection"
+                ],
+                correctAnswer: 0,
+                explanation: "Linctuses are viscous liquid, oral preparations prescribed for the relief of cough.",
+                memorizationTip: "Linctuses = For cough (think 'linctus' sounds like 'cough')."
+            },
+            {
+                question: "What is the difference between lotions and liniments?",
+                options: [
+                    "Lotions are applied without friction, liniments are applied with friction",
+                    "Liniments are applied without friction, lotions are applied with friction",
+                    "Lotions contain alcohol, liniments do not",
+                    "Liniments are for internal use only"
+                ],
+                correctAnswer: 0,
+                explanation: "Lotions are liquid preparations applied to the skin without friction, while liniments are alcoholic or oleaginous solutions applied with friction.",
+                memorizationTip: "Lotions = No friction; Liniments = With friction (think 'liniment' for muscle rubs)."
+            },
+            {
+                question: "What are lozenges?",
+                options: [
+                    "Solid preparations that dissolve slowly in the mouth",
+                    "Liquid medications for gargling",
+                    "Semi-solid creams",
+                    "Powders for solution"
+                ],
+                correctAnswer: 0,
+                explanation: "Lozenges are solid preparations containing one or more medicinal agents in a flavored, sweetened base, intended to dissolve or disintegrate slowly in the mouth.",
+                memorizationTip: "Lozenges = Dissolve in mouth (think of cough drops)."
+            },
+            {
+                question: "What is the difference between ointments and pastes?",
+                options: [
+                    "Pastes are thicker and stiffer than ointments",
+                    "Ointments are thicker and stiffer than pastes",
+                    "Ointments contain drugs while pastes do not",
+                    "Pastes are for internal use only"
+                ],
+                correctAnswer: 0,
+                explanation: "Pastes are thick, stiff ointments used to protectively coat the areas to which they are applied.",
+                memorizationTip: "Pastes = Thicker than ointments (think of toothpaste consistency)."
+            },
+            {
+                question: "What are spirits in pharmacy?",
+                options: [
+                    "Alcoholic or hydro-alcoholic solutions of volatile substances",
+                    "Concentrated sugar solutions",
+                    "Herbal extracts in water",
+                    "Solid dosage forms"
+                ],
+                correctAnswer: 0,
+                explanation: "Spirits are alcoholic or hydro-alcoholic solutions of volatile substances used for medicinal purposes or as flavoring agents.",
+                memorizationTip: "Spirits = Alcoholic solutions (think of 'spirits' as in alcoholic beverages)."
+            },
+            {
+                question: "What are tinctures?",
+                options: [
+                    "Alcoholic or hydro-alcoholic solutions of chemical substances or plant extracts",
+                    "Sugar-based syrups",
+                    "Oil-based solutions",
+                    "Water-based extracts"
+                ],
+                correctAnswer: 0,
+                explanation: "Tinctures are alcoholic or hydro-alcoholic solutions of either pure chemical substances or of plant extractions.",
+                memorizationTip: "Tinctures = Alcohol-based extracts (think of herbal tinctures)."
+            },
+            {
+                question: "When was the first pharmacy giving service to the general public established in Ethiopia?",
+                options: [
+                    "November 1911",
+                    "July 1930",
+                    "1961-1962",
+                    "1954"
+                ],
+                correctAnswer: 0,
+                explanation: "'Pharmazie la Gorgie' the first pharmacy giving service to the general public was established in November 1911 by Dr. Merab.",
+                memorizationTip: "First Ethiopian pharmacy = 1911 by Dr. Merab."
+            },
+            {
+                question: "When was the School of Pharmacy established in Addis Ababa University?",
+                options: [
+                    "1961-1962",
+                    "1911",
+                    "1930",
+                    "1974"
+                ],
+                correctAnswer: 0,
+                explanation: "School of pharmacy was established in 1961-1962 (1954 EC) in Addis Ababa University.",
+                memorizationTip: "AAU Pharmacy School = 1961-1962."
+            },
+            {
+                question: "When was the Ethiopian Pharmaceutical Association (EPA) formed?",
+                options: [
+                    "November 1974",
+                    "1961",
+                    "1911",
+                    "1985"
+                ],
+                correctAnswer: 0,
+                explanation: "EPA was formed officially in November 1974 with 40 members.",
+                memorizationTip: "EPA = 1974 (think of mid-1970s for professional association formation)."
+            },
+            {
+                question: "What is the minimum experience required to manage a pharmacy in Ethiopia?",
+                options: [
+                    "Three years",
+                    "One year",
+                    "Five years",
+                    "Ten years"
+                ],
+                correctAnswer: 0,
+                explanation: "A pharmacy must be managed under the responsibility of a registered and licensed pharmacist with minimum experience of three years.",
+                memorizationTip: "Pharmacy management = 3 years experience minimum."
+            },
+            {
+                question: "Who can manage a drug store in Ethiopia?",
+                options: [
+                    "Registered druggist",
+                    "Pharmacy technician",
+                    "Medical doctor",
+                    "Nurse"
+                ],
+                correctAnswer: 0,
+                explanation: "A drug store is managed under the responsibility of a registered druggist with at least three years of experience.",
+                memorizationTip: "Drug store = Druggist management (different from pharmacist for pharmacy)."
+            }
+        ];
+
+        // Initialize quiz variables
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+
+        // DOM elements
+        const quizContainer = document.getElementById('quiz-container');
+        const currentQuestionElement = document.getElementById('current-question');
+        const totalQuestionsElement = document.getElementById('total-questions');
+        const scoreElement = document.getElementById('score');
+        const prevButton = document.getElementById('prev-btn');
+        const nextButton = document.getElementById('next-btn');
+        const resultsContainer = document.getElementById('results');
+
+        // Initialize quiz
+        function initQuiz() {
+            totalQuestionsElement.textContent = questions.length;
+            displayQuestion(currentQuestionIndex);
+            updateNavigation();
+        }
+
+        // Display current question
+        function displayQuestion(index) {
+            const question = questions[index];
+            currentQuestionElement.textContent = index + 1;
+            
+            let optionsHtml = '';
+            question.options.forEach((option, i) => {
+                const isSelected = userAnswers[index] === i;
+                const isCorrect = i === question.correctAnswer;
+                let optionClass = 'option';
+                
+                if (isSelected) {
+                    optionClass += ' selected';
+                    if (isCorrect) {
+                        optionClass += ' correct';
+                    } else {
+                        optionClass += ' incorrect';
+                    }
+                }
+                
+                optionsHtml += `
+                    <li class="${optionClass}" data-index="${i}">
+                        ${String.fromCharCode(65 + i)}. ${option}
+                    </li>
+                `;
+            });
+            
+            quizContainer.innerHTML = `
+                <div class="question-container">
+                    <div class="question-text">${question.question}</div>
+                    <ul class="options">${optionsHtml}</ul>
+                    <div class="explanation" id="explanation-${index}">
+                        <p><strong>Explanation:</strong> ${question.explanation}</p>
+                        <div class="memorization-tip">
+                            <strong>Memorization Tip:</strong> ${question.memorizationTip}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Add event listeners to options
+            document.querySelectorAll('.option').forEach(option => {
+                option.addEventListener('click', function() {
+                    if (userAnswers[index] === null) {
+                        const selectedIndex = parseInt(this.getAttribute('data-index'));
+                        userAnswers[index] = selectedIndex;
+                        
+                        if (selectedIndex === question.correctAnswer) {
+                            score++;
+                            scoreElement.textContent = score;
+                        }
+                        
+                        displayQuestion(index);
+                        showExplanation(index);
+                    }
+                });
+            });
+            
+            // Show explanation if answer was already selected
+            if (userAnswers[index] !== null) {
+                showExplanation(index);
+            }
+        }
+
+        // Show explanation for current question
+        function showExplanation(index) {
+            const explanationElement = document.getElementById(`explanation-${index}`);
+            if (explanationElement) {
+                explanationElement.style.display = 'block';
+            }
+        }
+
+        // Update navigation buttons
+        function updateNavigation() {
+            prevButton.disabled = currentQuestionIndex === 0;
+            
+            if (currentQuestionIndex === questions.length - 1) {
+                nextButton.textContent = 'Finish';
+            } else {
+                nextButton.textContent = 'Next';
+            }
+        }
+
+        // Navigate to next question
+        function nextQuestion() {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                displayQuestion(currentQuestionIndex);
+                updateNavigation();
+            } else {
+                showResults();
+            }
+        }
+
+        // Navigate to previous question
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                displayQuestion(currentQuestionIndex);
+                updateNavigation();
+            }
+        }
+
+        // Show final results
+        function showResults() {
+            let resultsHtml = `
+                <div class="score">Your Score: ${score}/${questions.length}</div>
+                <div class="review-questions">
+                    <h3>Question Review:</h3>
+            `;
+            
+            questions.forEach((question, index) => {
+                const userAnswerIndex = userAnswers[index];
+                const isCorrect = userAnswerIndex === question.correctAnswer;
+                const userAnswerText = userAnswerIndex !== null ? 
+                    question.options[userAnswerIndex] : 'Not answered';
+                const correctAnswerText = question.options[question.correctAnswer];
+                
+                resultsHtml += `
+                    <div class="review-item">
+                        <p><strong>Question ${index + 1}:</strong> ${question.question}</p>
+                        <p class="user-answer ${isCorrect ? 'correct' : 'incorrect'}">
+                            Your answer: ${userAnswerText}
+                        </p>
+                        <p class="correct-answer">
+                            Correct answer: ${correctAnswerText}
+                        </p>
+                        <p><strong>Explanation:</strong> ${question.explanation}</p>
+                        <div class="memorization-tip">
+                            <strong>Memorization Tip:</strong> ${question.memorizationTip}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            resultsHtml += `</div>`;
+            resultsContainer.innerHTML = resultsHtml;
+            resultsContainer.style.display = 'block';
+            quizContainer.style.display = 'none';
+            document.querySelector('.navigation').style.display = 'none';
+            document.querySelector('.progress').style.display = 'none';
+        }
+
+        // Event listeners
+        prevButton.addEventListener('click', prevQuestion);
+        nextButton.addEventListener('click', nextQuestion);
+
+        // Initialize the quiz
+        initQuiz();
+    </script>
+</body>
+</html>

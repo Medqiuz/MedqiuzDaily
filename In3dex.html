@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy Chapter 2 Quiz</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1a73e8, #0d47a1);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo h1 {
+            margin-left: 15px;
+            font-size: 24px;
+        }
+        
+        .logo-icon {
+            font-size: 32px;
+            background: white;
+            color: #1a73e8;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .quiz-info {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        .quiz-info h2 {
+            color: #1a73e8;
+            margin-bottom: 10px;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: #1a73e8;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .question-container {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .active {
+            display: block;
+        }
+        
+        .question-number {
+            font-size: 18px;
+            color: #1a73e8;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .question-text {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        
+        .options-container {
+            margin-bottom: 20px;
+        }
+        
+        .option {
+            padding: 15px;
+            margin-bottom: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .option:hover {
+            background: #f0f7ff;
+            border-color: #1a73e8;
+        }
+        
+        .option.selected {
+            background: #e3f2fd;
+            border-color: #1a73e8;
+        }
+        
+        .option.correct {
+            background: #e8f5e9;
+            border-color: #4caf50;
+        }
+        
+        .option.incorrect {
+            background: #ffebee;
+            border-color: #f44336;
+        }
+        
+        .feedback {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .correct-feedback {
+            background: #e8f5e9;
+            border-left: 5px solid #4caf50;
+        }
+        
+        .incorrect-feedback {
+            background: #ffebee;
+            border-left: 5px solid #f44336;
+        }
+        
+        .feedback-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .memorization-tip {
+            background: #fff3e0;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            border-left: 3px solid #ff9800;
+        }
+        
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        button {
+            padding: 12px 25px;
+            background: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+        
+        button:hover {
+            background: #0d47a1;
+        }
+        
+        button:disabled {
+            background: #bdbdbd;
+            cursor: not-allowed;
+        }
+        
+        .results-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            display: none;
+        }
+        
+        .results-container h2 {
+            color: #1a73e8;
+            margin-bottom: 20px;
+        }
+        
+        .score {
+            font-size: 48px;
+            font-weight: bold;
+            color: #1a73e8;
+            margin: 20px 0;
+        }
+        
+        .evaluation-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-top: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        
+        .rating {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        
+        .star {
+            font-size: 30px;
+            color: #ddd;
+            cursor: pointer;
+            margin: 0 5px;
+            transition: color 0.2s;
+        }
+        
+        .star:hover, .star.active {
+            color: #ffc107;
+        }
+        
+        .submit-btn {
+            background: #4caf50;
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+        }
+        
+        .submit-btn:hover {
+            background: #388e3c;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo {
+                margin-bottom: 15px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+            }
+            
+            button {
+                margin-bottom: 10px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">℞</div>
+                <h1>MedQuiz Pharmacy</h1>
+            </div>
+            <div>Chapter 2: Prescription and Medical Terminology</div>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="quiz-info">
+            <h2>Pharmacy Chapter 2 Quiz</h2>
+            <p>Test your knowledge of prescription components, Latin terms, abbreviations, and pharmaceutical terminology.</p>
+            <p><strong>Instructions:</strong> Select the best answer for each question. After submitting your answer, you'll receive feedback with explanations and memorization tips.</p>
+            
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+            <div id="progress-text">Question 1 of 65</div>
+        </div>
+        
+        <div id="quiz-container">
+            <!-- Questions will be inserted here by JavaScript -->
+        </div>
+        
+        <div class="results-container" id="results-container">
+            <h2>Quiz Completed!</h2>
+            <p>You have completed the Pharmacy Chapter 2 Quiz</p>
+            <div class="score" id="score">0%</div>
+            <p id="result-message"></p>
+            
+            <div class="evaluation-form">
+                <h3>Please Evaluate Our Quiz ♥️</h3>
+                <p>Your feedback helps us improve the learning experience.</p>
+                
+                <form id="evaluation-form" action="https://formspree.io/f/mjkjkedv" method="POST">
+                    <div class="form-group">
+                        <label for="name">Your Name:</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number:</label>
+                        <input type="tel" id="phone" name="phone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="rating">Rating:</label>
+                        <div class="rating" id="star-rating">
+                            <span class="star" data-value="1">★</span>
+                            <span class="star" data-value="2">★</span>
+                            <span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span>
+                            <span class="star" data-value="5">★</span>
+                        </div>
+                        <input type="hidden" id="rating-value" name="rating" value="0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="percent">Score Percentage:</label>
+                        <input type="text" id="percent" name="percent" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="comments">Comments/Suggestions:</label>
+                        <textarea id="comments" name="comments" rows="4" placeholder="What did you like? How can we improve?"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">Submit Evaluation</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Quiz questions data - fixed with correct answers and explanations
+        const questions = [
+            {
+                question: "What does the sig code 'q6h' mean?",
+                options: ["At 6 A.M", "Every 6 hours", "At 6 P.M", "Six times a day"],
+                correctAnswer: 1,
+                explanation: "'q6h' stands for 'quaque 6 hora' in Latin, which means 'every 6 hours'.",
+                tip: "Remember: 'q' stands for 'quaque' meaning 'every', and 'h' stands for 'hora' meaning 'hour'."
+            },
+            {
+                question: "What does 'PRN' mean in a prescription?",
+                options: ["Immediately", "As needed", "Rectally", "After a meal"],
+                correctAnswer: 1,
+                explanation: "'PRN' is an abbreviation for 'pro re nata', which means 'as needed' or 'as the circumstance arises'.",
+                tip: "Think of PRN as 'Please Remember Needed' to help remember it means 'as needed'."
+            },
+            {
+                question: "The route of administration sig code for topical patch is:",
+                options: ["SC", "IM", "ID", "TD"],
+                correctAnswer: 3,
+                explanation: "'TD' stands for 'transdermal', which is the correct abbreviation for topical patch administration.",
+                tip: "TD = TransDermal - medication delivered through the skin."
+            },
+            {
+                question: "Which one of the following abbreviations is NOT a liquid dosage form?",
+                options: ["Susp", "Supp", "Syr", "Sol"],
+                correctAnswer: 1,
+                explanation: "'Supp' stands for suppository, which is a solid dosage form, not a liquid.",
+                tip: "Susp = Suspension, Syr = Syrup, Sol = Solution - all are liquids. Supp = Suppository - solid."
+            },
+            {
+                question: "Which sig code means 'Under the tongue'?",
+                options: ["SL", "PO", "IM", "AU"],
+                correctAnswer: 0,
+                explanation: "'SL' stands for 'sublingual', which means 'under the tongue'.",
+                tip: "SL = SubLingual - medication placed under the tongue for absorption."
+            },
+            {
+                question: "What does 'i gtt OS' mean?",
+                options: ["One drop into the left ear", "One drop into the right eye", "One drop into the right ear", "One drop into the left eye"],
+                correctAnswer: 3,
+                explanation: "'i' means one, 'gtt' means drop, 'OS' means left eye (oculus sinister).",
+                tip: "Remember eye abbreviations: OD = right eye (oculus dexter), OS = left eye (oculus sinister), OU = both eyes (oculi uterque)."
+            },
+            {
+                question: "What does 'ii gtts AD' mean?",
+                options: ["Two drops into the left ear", "Two drops into the right eye", "Two drops into the right ear", "Two drops into the left eye"],
+                correctAnswer: 2,
+                explanation: "'ii' means two, 'gtts' means drops, 'AD' means right ear (auris dextra).",
+                tip: "Remember ear abbreviations: AD = right ear (auris dextra), AS = left ear (auris sinistra), AU = both ears (aures unitas)."
+            },
+            {
+                question: "Which Sig code is NOT the frequency of 'once a day'?",
+                options: ["qAM", "qPM", "qid", "qHS"],
+                correctAnswer: 2,
+                explanation: "'qid' means four times a day (quater in die), not once a day.",
+                tip: "Once a day frequencies: qd (quaque die), qAM (every morning), qPM (every evening), qHS (every bedtime)."
+            },
+            {
+                question: "Interpret 'ii tab PO HS'",
+                options: ["2 tablets by mouth with food", "2 tablets by mouth at bedtime", "11 tablets by mouth each week", "2 tablets under tongue now"],
+                correctAnswer: 1,
+                explanation: "'ii' = two, 'tab' = tablets, 'PO' = by mouth, 'HS' = at bedtime (hora somni).",
+                tip: "HS stands for 'hora somni' - Latin for 'at the hour of sleep'."
+            },
+            {
+                question: "Interpret 'V gtts OS TID x 10d'",
+                options: ["5 drops in left eye three times daily for 10 days", "5 drops in right eye twice daily for 10 days", "5 drops in left ear three times daily for 10 days", "5 drops in right ear twice daily for 10 days"],
+                correctAnswer: 0,
+                explanation: "'V' = five, 'gtts' = drops, 'OS' = left eye, 'TID' = three times daily, 'x 10d' = for 10 days.",
+                tip: "Roman numerals are sometimes used in prescriptions: I=1, II=2, III=3, IV=4, V=5, X=10."
+            },
+            {
+                question: "What is the sig code for '1 capsule by mouth twice a day'?",
+                options: ["I cap PO QID", "I cap PO QD", "I cap PO BID", "I cap PO TID"],
+                correctAnswer: 2,
+                explanation: "'I' = one, 'cap' = capsule, 'PO' = by mouth, 'BID' = twice daily (bis in die).",
+                tip: "Frequency abbreviations: QD = once daily, BID = twice daily, TID = three times daily, QID = four times daily."
+            },
+            {
+                question: "A prescription for Ciprodex® otic may contain the sig code:",
+                options: ["AU", "OD", "IM", "PO"],
+                correctAnswer: 0,
+                explanation: "Ciprodex® otic is an ear drop, so 'AU' (auris unitas - both ears) would be appropriate.",
+                tip: "Otic medications are for ears, ophthalmic medications are for eyes."
+            },
+            {
+                question: "What is the sig code for 'under the skin'?",
+                options: ["SQ", "IV", "IM", "ID"],
+                correctAnswer: 0,
+                explanation: "'SQ' or 'SC' stands for subcutaneous, which means under the skin.",
+                tip: "SQ = Subcutaneous (under the skin), IM = Intramuscular (into muscle), IV = Intravenous (into vein), ID = Intradermal (into skin)."
+            },
+            {
+                question: "Which of the following is NOT a topical product?",
+                options: ["Ung", "cr", "lot", "Inh"],
+                correctAnswer: 3,
+                explanation: "'Inh' stands for inhalation, which is not a topical product. Topical products are applied to the skin.",
+                tip: "Topical abbreviations: Ung = ointment (unguentum), cr = cream, lot = lotion."
+            },
+            {
+                question: "What does 'ii tab PO HS' mean?",
+                options: ["2 tablets by mouth with food", "2 tablets by mouth at bedtime", "11 tablets by mouth each week", "2 tablets under tongue now"],
+                correctAnswer: 1,
+                explanation: "'ii' = two, 'tab' = tablets, 'PO' = by mouth, 'HS' = at bedtime.",
+                tip: "HS = hora somni (at bedtime) - think of 'Hours of Sleep' to remember."
+            },
+            {
+                question: "'Give the amount needed' is indicated by which sig code?",
+                options: ["DAW", "NR", "QS", "UD"],
+                correctAnswer: 2,
+                explanation: "'QS' stands for 'quantum sufficit' which means 'a sufficient quantity' or 'as much as is needed'.",
+                tip: "QS = Quantum Sufficit = Quantity Sufficient"
+            },
+            {
+                question: "A sig code reads '2 BID x7d'. What does 'x7d' mean?",
+                options: ["Seven times a day", "For seven days", "For seven doses", "Dispense seven doses"],
+                correctAnswer: 1,
+                explanation: "'x7d' means 'for 7 days'. The 'x' indicates 'for' and 'd' stands for days.",
+                tip: "Duration abbreviations: x7d = for 7 days, x30d = for 30 days, etc."
+            },
+            {
+                question: "What does 'iv tab pc' mean?",
+                options: ["Take six tablets after meals", "Take four tablets after meals", "Take six tablets before meals", "Take four tablets before meals"],
+                correctAnswer: 1,
+                explanation: "'iv' = four (Roman numeral), 'tab' = tablets, 'pc' = after meals (post cibum).",
+                tip: "Meal timing: ac = before meals (ante cibum), pc = after meals (post cibum)."
+            },
+            {
+                question: "What are the four parts of a prescription?",
+                options: ["Superscription, Inscription, Subscription, Signatura", "Header, Body, Footer, Signature", "Patient info, Drug info, Directions, Refills", "Date, Drug, Dose, Duration"],
+                correctAnswer: 0,
+                explanation: "The four parts are: Superscription (patient info and Rx symbol), Inscription (drug and strength), Subscription (directions to pharmacist), Signatura (directions to patient).",
+                tip: "Remember SISS: Superscription, Inscription, Subscription, Signatura."
+            },
+            {
+                question: "Interpret 'III gtts AU QID'",
+                options: ["3 drops in both ears four times daily", "3 drops in left ear four times daily", "3 drops in right ear four times daily", "3 drops in both eyes four times daily"],
+                correctAnswer: 0,
+                explanation: "'III' = three, 'gtts' = drops, 'AU' = both ears (aures unitas), 'QID' = four times daily (quater in die).",
+                tip: "AU = Both Ears, AS = Left Ear, AD = Right Ear"
+            },
+            {
+                question: "Which part of the prescription contains the patient's information?",
+                options: ["Superscription", "Inscription", "Subscription", "Signatura"],
+                correctAnswer: 0,
+                explanation: "The superscription contains the patient's name, address, age, and the date of the prescription.",
+                tip: "Super = above, so superscription is the 'above writing' part of the prescription."
+            },
+            {
+                question: "What does the 'inscription' part of a prescription contain?",
+                options: ["Patient information", "Drug name and strength", "Directions to the pharmacist", "Directions to the patient"],
+                correctAnswer: 1,
+                explanation: "The inscription contains the name and strength of the medication, including the dosage form and quantity.",
+                tip: "Inscription = 'in writing' the drug details."
+            },
+            {
+                question: "Which part of the prescription provides directions to the pharmacist?",
+                options: ["Superscription", "Inscription", "Subscription", "Signatura"],
+                correctAnswer: 2,
+                explanation: "The subscription provides specific directions to the pharmacist on how to compound the medication.",
+                tip: "Subscription = 'under writing' - directions under the drug information."
+            },
+            {
+                question: "What does the 'signatura' part of a prescription contain?",
+                options: ["Patient information", "Drug name and strength", "Directions to the pharmacist", "Directions to the patient"],
+                correctAnswer: 3,
+                explanation: "The signatura contains directions to the patient on how, how much, when, and how long to take the medication.",
+                tip: "Signatura comes from Latin 'signa' meaning 'write' or 'label' - what to write on the label for the patient."
+            },
+            {
+                question: "What does the symbol 'Rx' mean in a prescription?",
+                options: ["Right", "Recipe", "Repeat", "Rx only"],
+                correctAnswer: 1,
+                explanation: "'Rx' is an abbreviation for the Latin word 'recipe' which means 'take'.",
+                tip: "Rx = Recipe = Take (as in 'take this medicine')"
+            },
+            {
+                question: "Which type of drugs may not be dispensed without a prescription from a physician?",
+                options: ["Legend drugs", "Controlled drugs", "Over-the-counter drugs", "All of the above"],
+                correctAnswer: 0,
+                explanation: "Legend drugs require a prescription but don't have the additional restrictions of controlled substances.",
+                tip: "Legend drugs = prescription drugs that carry the legend 'Caution: Federal law prohibits dispensing without prescription'."
+            },
+            {
+                question: "Which type of drugs require additional safeguards for storage and have limited refills?",
+                options: ["Legend drugs", "Controlled drugs", "Over-the-counter drugs", "All of the above"],
+                correctAnswer: 1,
+                explanation: "Controlled drugs have additional restrictions due to their potential for abuse or addiction.",
+                tip: "Controlled substances are classified into schedules I-V based on their abuse potential."
+            },
+            {
+                question: "Which type of drugs do not require a prescription?",
+                options: ["Legend drugs", "Controlled drugs", "Over-the-counter drugs", "None of the above"],
+                correctAnswer: 2,
+                explanation: "Over-the-counter (OTC) drugs can be purchased without a prescription.",
+                tip: "OTC = Over The Counter - available directly to consumers without a prescription."
+            },
+            {
+                question: "What color is the prescription paper for narcotic drugs in Ethiopia?",
+                options: ["White", "Yellow", "Red", "Blue"],
+                correctAnswer: 2,
+                explanation: "In Ethiopia, narcotic drugs prescriptions have red color paper.",
+                tip: "Red for narcotics - like a red alert for dangerous drugs."
+            },
+            {
+                question: "What color is the prescription paper for psychotropic substances in Ethiopia?",
+                options: ["White", "Yellow", "Red", "Blue"],
+                correctAnswer: 3,
+                explanation: "In Ethiopia, psychotropic substance prescriptions have blue color paper.",
+                tip: "Blue for psychotropics - think of feeling 'blue' as a mood alteration."
+            },
+            {
+                question: "How long should conventional prescription records be maintained?",
+                options: ["6 months", "1 year", "2 years", "5 years"],
+                correctAnswer: 2,
+                explanation: "Conventional (ordinary) prescription records should be maintained for 2 years.",
+                tip: "Regular prescriptions = 2 years, Controlled substances = 5 years."
+            },
+            {
+                question: "How long should controlled substance prescription records be maintained?",
+                options: ["6 months", "1 year", "2 years", "5 years"],
+                correctAnswer: 3,
+                explanation: "Controlled substance prescription records should be maintained for at least 5 years.",
+                tip: "Controlled substances have longer record keeping requirements due to their abuse potential."
+            },
+            {
+                question: "Which of the following is a narcotic drug?",
+                options: ["Diazepam", "Codeine", "Phenobarbitone", "Chlordiazepoxide"],
+                correctAnswer: 1,
+                explanation: "Codeine is a narcotic drug, while the others are psychotropic substances.",
+                tip: "Narcotics are primarily used for pain relief, while psychotropics affect mood and behavior."
+            },
+            {
+                question: "Which of the following is a psychotropic substance?",
+                options: ["Morphine", "Codeine", "Diazepam", "Fentanyl"],
+                correctAnswer: 2,
+                explanation: "Diazepam is a psychotropic substance (benzodiazepine), while the others are narcotics.",
+                tip: "Psychotropic substances include tranquilizers, sedatives, and stimulants."
+            },
+            {
+                question: "What does the abbreviation 'PO' mean?",
+                options: ["By mouth", "After meals", "As needed", "At bedtime"],
+                correctAnswer: 0,
+                explanation: "'PO' stands for 'per os' which means 'by mouth'.",
+                tip: "PO = Per Os = By Mouth (think of 'Per Oral')"
+            },
+            {
+                question: "What does the abbreviation 'PR' mean?",
+                options: ["After meals", "As needed", "Rectally", "By mouth"],
+                correctAnswer: 2,
+                explanation: "'PR' stands for 'per rectum' which means 'rectally'.",
+                tip: "PR = Per Rectum = Rectally"
+            },
+            {
+                question: "What does the abbreviation 'IV' mean?",
+                options: ["Into vein", "Into muscle", "Under skin", "Into skin"],
+                correctAnswer: 0,
+                explanation: "'IV' stands for 'intravenous' which means 'into a vein'.",
+                tip: "IV = IntraVenous = Into Vein"
+            },
+            {
+                question: "What does the abbreviation 'IM' mean?",
+                options: ["Into vein", "Into muscle", "Under skin", "Into skin"],
+                correctAnswer: 1,
+                explanation: "'IM' stands for 'intramuscular' which means 'into a muscle'.",
+                tip: "IM = IntraMuscular = Into Muscle"
+            },
+            {
+                question: "What does the abbreviation 'SC' or 'SQ' mean?",
+                options: ["Into vein", "Into muscle", "Under skin", "Into skin"],
+                correctAnswer: 2,
+                explanation: "'SC' or 'SQ' stands for 'subcutaneous' which means 'under the skin'.",
+                tip: "SC/SQ = SubCutaneous = Under Skin"
+            },
+            {
+                question: "What does the abbreviation 'ID' mean?",
+                options: ["Into vein", "Into muscle", "Under skin", "Into skin"],
+                correctAnswer: 3,
+                explanation: "'ID' stands for 'intradermal' which means 'into the skin'.",
+                tip: "ID = IntraDermal = Into Skin (used for allergy tests, TB tests)"
+            },
+            {
+                question: "What does the abbreviation 'ac' mean?",
+                options: ["After meals", "Before meals", "With meals", "Between meals"],
+                correctAnswer: 1,
+                explanation: "'ac' stands for 'ante cibum' which means 'before meals'.",
+                tip: "ac = Ante Cibum = Before Food"
+            },
+            {
+                question: "What does the abbreviation 'pc' mean?",
+                options: ["After meals", "Before meals", "With meals", "Between meals"],
+                correctAnswer: 0,
+                explanation: "'pc' stands for 'post cibum' which means 'after meals'.",
+                tip: "pc = Post Cibum = After Food"
+            },
+            {
+                question: "What does the abbreviation 'hs' mean?",
+                options: ["At bedtime", "Every hour", "Immediately", "As needed"],
+                correctAnswer: 0,
+                explanation: "'hs' stands for 'hora somni' which means 'at bedtime'.",
+                tip: "hs = Hora Somni = At Bedtime (Hour of Sleep)"
+            },
+            {
+                question: "What does the abbreviation 'stat' mean?",
+                options: ["At bedtime", "Every hour", "Immediately", "As needed"],
+                correctAnswer: 2,
+                explanation: "'stat' stands for 'statim' which means 'immediately'.",
+                tip: "stat = Statim = Immediately (think of 'STAT' in emergency situations)"
+            },
+            {
+                question: "What does the abbreviation 'qid' mean?",
+                options: ["Four times daily", "Three times daily", "Twice daily", "Once daily"],
+                correctAnswer: 0,
+                explanation: "'qid' stands for 'quater in die' which means 'four times a day'.",
+                tip: "qid = Quater In Die = Four Times A Day"
+            },
+            {
+                question: "What does the abbreviation 'tid' mean?",
+                options: ["Four times daily", "Three times daily", "Twice daily", "Once daily"],
+                correctAnswer: 1,
+                explanation: "'tid' stands for 'ter in die' which means 'three times a day'.",
+                tip: "tid = Ter In Die = Three Times A Day"
+            },
+            {
+                question: "What does the abbreviation 'bid' mean?",
+                options: ["Four times daily", "Three times daily", "Twice daily", "Once daily"],
+                correctAnswer: 2,
+                explanation: "'bid' stands for 'bis in die' which means 'twice a day'.",
+                tip: "bid = Bis In Die = Two Times A Day"
+            },
+            {
+                question: "What does the abbreviation 'qd' mean?",
+                options: ["Four times daily", "Three times daily", "Twice daily", "Once daily"],
+                correctAnswer: 3,
+                explanation: "'qd' stands for 'quaque die' which means 'every day' or 'once daily'.",
+                tip: "qd = Quaque Die = Every Day"
+            },
+            {
+                question: "What does the abbreviation 'qod' mean?",
+                options: ["Every other day", "Every day", "Four times daily", "As needed"],
+                correctAnswer: 0,
+                explanation: "'qod' stands for 'quaque altera die' which means 'every other day'.",
+                tip: "qod = Quaque Other Day = Every Other Day"
+            },
+            {
+                question: "What does the abbreviation 'ud' mean?",
+                options: ["As directed", "As needed", "Right ear", "As desired"],
+                correctAnswer: 0,
+                explanation: "'ud' stands for 'ut dictum' which means 'as directed'.",
+                tip: "ud = Ut Dictum = As Directed"
+            },
+            {
+                question: "What does the abbreviation 'ad lib' mean?",
+                options: ["As directed", "As needed", "Right ear", "As desired"],
+                correctAnswer: 3,
+                explanation: "'ad lib' stands for 'ad libitum' which means 'as desired' or 'freely'.",
+                tip: "ad lib = Ad Libitum = As Desired (think of 'ad lib' in performance)"
+            },
+            {
+                question: "What does the abbreviation 'aa' mean?",
+                options: ["Of each", "Before", "After", "With"],
+                correctAnswer: 0,
+                explanation: "'aa' stands for 'ana' which means 'of each'.",
+                tip: "aa = Ana = Of Each (used when combining equal parts of multiple ingredients)"
+            },
+            {
+                question: "What does the abbreviation 'c' mean?",
+                options: ["With", "Without", "After", "Before"],
+                correctAnswer: 0,
+                explanation: "'c' stands for 'cum' which means 'with'.",
+                tip: "c = Cum = With"
+            },
+            {
+                question: "What does the abbreviation 's' mean?",
+                options: ["With", "Without", "After", "Before"],
+                correctAnswer: 1,
+                explanation: "'s' stands for 'sine' which means 'without'.",
+                tip: "s = Sine = Without"
+            },
+            {
+                question: "What does the abbreviation 'gt' or 'gtt' mean?",
+                options: ["Grain", "Gram", "Drop", "Gallon"],
+                correctAnswer: 2,
+                explanation: "'gt' or 'gtt' stands for 'gutta' which means 'drop'.",
+                tip: "gtt = Gutta = Drop (plural: gtts = guttae)"
+            },
+            {
+                question: "What does the abbreviation 'gr' mean?",
+                options: ["Grain", "Gram", "Drop", "Gallon"],
+                correctAnswer: 0,
+                explanation: "'gr' stands for 'grain' (a unit of weight).",
+                tip: "gr = Grain (approximately 65 milligrams)"
+            },
+            {
+                question: "What does the abbreviation 'gm' or 'g' mean?",
+                options: ["Grain", "Gram", "Drop", "Gallon"],
+                correctAnswer: 1,
+                explanation: "'gm' or 'g' stands for 'gram'.",
+                tip: "g = Gram (metric unit of weight)"
+            },
+            {
+                question: "What does the abbreviation 'm' mean?",
+                options: ["Minim", "Meter", "Milligram", "Milliliter"],
+                correctAnswer: 0,
+                explanation: "'m' stands for 'minim' (a unit of volume).",
+                tip: "m = Minim (approximately 0.06 mL)"
+            },
+            {
+                question: "What does the abbreviation 'mg' mean?",
+                options: ["Minim", "Meter", "Milligram", "Milliliter"],
+                correctAnswer: 2,
+                explanation: "'mg' stands for 'milligram'.",
+                tip: "mg = MilliGram (1/1000 of a gram)"
+            },
+            {
+                question: "What does the abbreviation 'mL' mean?",
+                options: ["Minim", "Meter", "Milligram", "Milliliter"],
+                correctAnswer: 3,
+                explanation: "'mL' stands for 'milliliter'.",
+                tip: "mL = MilliLiter (1/1000 of a liter)"
+            },
+            {
+                question: "What does the abbreviation 'kg' mean?",
+                options: ["Kilogram", "Kilometer", "Kilocalorie", "Kilovolt"],
+                correctAnswer: 0,
+                explanation: "'kg' stands for 'kilogram'.",
+                tip: "kg = KiloGram (1000 grams)"
+            },
+            {
+                question: "What does the abbreviation 'oz' mean?",
+                options: ["Ounce", "Once", "Only", "Oral"],
+                correctAnswer: 0,
+                explanation: "'oz' stands for 'ounce'.",
+                tip: "oz = Ounce (approximately 30 mL or 30 g)"
+            },
+            {
+                question: "What does the abbreviation 'pt' mean?",
+                options: ["Pint", "Part", "Patient", "Point"],
+                correctAnswer: 0,
+                explanation: "'pt' stands for 'pint'.",
+                tip: "pt = Pint (approximately 473 mL)"
+            },
+            {
+                question: "What does the abbreviation 'qt' mean?",
+                options: ["Quart", "Quantity", "Quarter", "Quiet"],
+                correctAnswer: 0,
+                explanation: "'qt' stands for 'quart'.",
+                tip: "qt = Quart (approximately 946 mL or 2 pints)"
+            },
+            {
+                question: "What does the abbreviation 'gal' mean?",
+                options: ["Gallon", "Gram", "Grain", "Gutta"],
+                correctAnswer: 0,
+                explanation: "'gal' stands for 'gallon'.",
+                tip: "gal = Gallon (approximately 3.785 liters)"
+            },
+            {
+                question: "What does the abbreviation 'lb' mean?",
+                options: ["Pound", "Liter", "Label", "Left"],
+                correctAnswer: 0,
+                explanation: "'lb' stands for 'pound'.",
+                tip: "lb = Pound (from Latin 'libra', approximately 454 grams)"
+            },
+            {
+                question: "What does the abbreviation 'dr' mean?",
+                options: ["Dram", "Drop", "Doctor", "Dose"],
+                correctAnswer: 0,
+                explanation: "'dr' stands for 'dram'.",
+                tip: "dr = Dram (approximately 3.9 mL or 3.9 g)"
+            },
+            {
+                question: "What does the abbreviation 'ss' mean?",
+                options: ["One half", "As needed", "Without", "With"],
+                correctAnswer: 0,
+                explanation: "'ss' stands for 'semis' which means 'one half'.",
+                tip: "ss = Semis = One Half"
+            },
+            {
+                question: "What does the abbreviation 'M' mean?",
+                options: ["Mix", "Minim", "Milliliter", "Milligram"],
+                correctAnswer: 0,
+                explanation: "'M' stands for 'misce' which means 'mix'.",
+                tip: "M = Misce = Mix"
+            },
+            {
+                question: "What does the abbreviation 'ft' mean?",
+                options: ["Make", "For", "From", "Filter"],
+                correctAnswer: 0,
+                explanation: "'ft' stands for 'fiat' which means 'make' or 'let it be made'.",
+                tip: "ft = Fiat = Make (used in compounding instructions)"
+            },
+            {
+                question: "What does the abbreviation 'div' mean?",
+                options: ["Divide", "Dilute", "Dose", "Daily"],
+                correctAnswer: 0,
+                explanation: "'div' stands for 'divide' which means 'divide'.",
+                tip: "div = Divide = Separate into parts"
+            },
+            {
+                question: "What does the abbreviation 'dil' mean?",
+                options: ["Divide", "Dilute", "Dose", "Daily"],
+                correctAnswer: 1,
+                explanation: "'dil' stands for 'dilue' which means 'dilute'.",
+                tip: "dil = Dilue = Dilute (make less concentrated)"
+            },
+            {
+                question: "What does the abbreviation 'sig' mean?",
+                options: ["Write", "Sign", "Small", "Slow"],
+                correctAnswer: 0,
+                explanation: "'sig' stands for 'signa' which means 'write' or 'label'.",
+                tip: "sig = Signa = Write (instructions for the patient)"
+            },
+            {
+                question: "What does the abbreviation 'NPO' mean?",
+                options: ["Nothing by mouth", "New patient only", "No prescription order", "Non-pharmacy order"],
+                correctAnswer: 0,
+                explanation: "'NPO' stands for 'nil per os' which means 'nothing by mouth'.",
+                tip: "NPO = Nil Per Os = Nothing By Mouth (used before surgery or certain procedures)"
+            }
+        ];
+
+        // Initialize quiz
+        let currentQuestion = 0;
+        let score = 0;
+        let userAnswers = new Array(questions.length).fill(null);
+        
+        // Display question
+        function displayQuestion() {
+            const question = questions[currentQuestion];
+            const questionElement = document.getElementById(`question-${currentQuestion}`);
+            
+            // Update progress
+            document.getElementById('progress').style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
+            document.getElementById('progress-text').textContent = `Question ${currentQuestion + 1} of ${questions.length}`;
+            
+            // Show current question
+            document.querySelectorAll('.question-container').forEach(q => q.classList.remove('active'));
+            questionElement.classList.add('active');
+            
+            // Reset options
+            questionElement.querySelectorAll('.option').forEach(option => {
+                option.classList.remove('selected', 'correct', 'incorrect');
+            });
+            
+            // Hide feedback
+            questionElement.querySelector('.feedback').style.display = 'none';
+        }
+
+        // Create quiz HTML
+        function createQuiz() {
+            const quizContainer = document.getElementById('quiz-container');
+            
+            questions.forEach((question, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = `question-container ${index === 0 ? 'active' : ''}`;
+                questionDiv.id = `question-${index}`;
+                
+                let optionsHTML = '';
+                question.options.forEach((option, optIndex) => {
+                    optionsHTML += `
+                        <div class="option" data-index="${optIndex}">
+                            ${option}
+                        </div>
+                    `;
+                });
+                
+                questionDiv.innerHTML = `
+                    <div class="question-number">Question ${index + 1}</div>
+                    <div class="question-text">${question.question}</div>
+                    <div class="options-container">
+                        ${optionsHTML}
+                    </div>
+                    <div class="feedback">
+                        <div class="feedback-title">Explanation:</div>
+                        <div class="explanation"></div>
+                        <div class="memorization-tip">
+                            <strong>Memorization Tip:</strong> <span class="tip-text"></span>
+                        </div>
+                    </div>
+                    <div class="navigation">
+                        <button class="prev-btn" ${index === 0 ? 'disabled' : ''}>Previous</button>
+                        <button class="next-btn" ${index === questions.length - 1 ? 'disabled' : ''}>Next</button>
+                        ${index === questions.length - 1 ? '<button class="submit-btn">Submit Quiz</button>' : ''}
+                    </div>
+                `;
+                
+                quizContainer.appendChild(questionDiv);
+                
+                // Add event listeners to options
+                questionDiv.querySelectorAll('.option').forEach(option => {
+                    option.addEventListener('click', function() {
+                        if (userAnswers[index] !== null) return; // Already answered
+                        
+                        const selectedIndex = parseInt(this.getAttribute('data-index'));
+                        userAnswers[index] = selectedIndex;
+                        
+                        // Mark selected option
+                        questionDiv.querySelectorAll('.option').forEach(opt => {
+                            opt.classList.remove('selected');
+                        });
+                        this.classList.add('selected');
+                        
+                        // Check if correct
+                        const isCorrect = selectedIndex === question.correctAnswer;
+                        if (isCorrect) {
+                            this.classList.add('correct');
+                            score++;
+                        } else {
+                            this.classList.add('incorrect');
+                            // Mark correct answer
+                            questionDiv.querySelectorAll('.option')[question.correctAnswer].classList.add('correct');
+                        }
+                        
+                        // Show feedback
+                        const feedback = questionDiv.querySelector('.feedback');
+                        feedback.querySelector('.explanation').textContent = question.explanation;
+                        feedback.querySelector('.tip-text').textContent = question.tip;
+                        feedback.className = `feedback ${isCorrect ? 'correct-feedback' : 'incorrect-feedback'}`;
+                        feedback.style.display = 'block';
+                    });
+                });
+                
+                // Navigation buttons
+                if (index > 0) {
+                    questionDiv.querySelector('.prev-btn').addEventListener('click', function() {
+                        currentQuestion--;
+                        displayQuestion();
+                    });
+                }
+                
+                if (index < questions.length - 1) {
+                    questionDiv.querySelector('.next-btn').addEventListener('click', function() {
+                        currentQuestion++;
+                        displayQuestion();
+                    });
+                } else {
+                    questionDiv.querySelector('.submit-btn').addEventListener('click', function() {
+                        showResults();
+                    });
+                }
+            });
+        }
+
+        // Show results
+        function showResults() {
+            document.getElementById('quiz-container').style.display = 'none';
+            const resultsContainer = document.getElementById('results-container');
+            const scoreElement = document.getElementById('score');
+            const resultMessage = document.getElementById('result-message');
+            const percentElement = document.getElementById('percent');
+            
+            const percentage = Math.round((score / questions.length) * 100);
+            scoreElement.textContent = `${percentage}%`;
+            percentElement.value = `${percentage}%`;
+            
+            if (percentage >= 90) {
+                resultMessage.textContent = "Excellent! You have a strong understanding of prescription terminology and abbreviations.";
+            } else if (percentage >= 80) {
+                resultMessage.textContent = "Very good! You have a good grasp of prescription terminology with some room for improvement.";
+            } else if (percentage >= 70) {
+                resultMessage.textContent = "Good effort! Review the areas where you had difficulty to strengthen your knowledge.";
+            } else if (percentage >= 60) {
+                resultMessage.textContent = "You passed, but consider reviewing the material again to improve your understanding.";
+            } else {
+                resultMessage.textContent = "You need more study time. Review Chapter 2 carefully and try again.";
+            }
+            
+            resultsContainer.style.display = 'block';
+        }
+
+        // Star rating functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const stars = document.querySelectorAll('.star');
+            const ratingValue = document.getElementById('rating-value');
+            
+            stars.forEach(star => {
+                star.addEventListener('click', function() {
+                    const value = this.getAttribute('data-value');
+                    ratingValue.value = value;
+                    
+                    stars.forEach(s => {
+                        if (s.getAttribute('data-value') <= value) {
+                            s.classList.add('active');
+                        } else {
+                            s.classList.remove('active');
+                        }
+                    });
+                });
+            });
+            
+            // Initialize quiz
+            createQuiz();
+        });
+    </script>
+</body>
+</html>
